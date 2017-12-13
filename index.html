@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="assets/css/demo.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="assets/css/jquery.rateyo.min.css">
+
+  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
+  <title>Form Bulider</title>
+</head>
+
+<body>
+  <div class="content">
+    <div class="row">
+        <h1>Form Builder</h1>
+        <h6>Add class name to each form element to give native LaF</h6>
+        <!-- <h2>Language</h2>
+          <select id="setLanguage">
+            <option value="en-US">English</option>
+            <option value="ar-TN" dir="rtl">تونسي</option>
+            <option value="de-DE">Deutsch</option>
+            <option value="es-ES">español</option>
+            <option value="fa-IR" dir="rtl">فارسى</option>
+            <option value="fr-FR">français</option>
+            <option value="nb-NO">norsk</option>
+            <option value="nl-NL">Nederlands</option>
+            <option value="pt-BR">português</option>
+            <option value="ro-RO">român</option>
+            <option value="ru-RU">Русский язык</option>
+            <option value="tr-TR">Türkçe</option>
+            <option value="vi-VN">tiếng việt</option>
+            <option value="zh-TW">台語</option>
+          </select> -->
+        <div style="width:50%; padding-bottom:1%;">
+            <h2>Form Heading</h2>
+            <input class="form-control" type="text" id="head" name="head">
+        </div>
+        <div>
+            <div  class=" pull-left" style="width:50%!important;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Construct your form<h6>-click 'Execute/Refresh' button to see live result on the right side</h6></div>
+                    <div class="panel-body">
+                        <div id="stage1" class="build-wrap"></div>
+                    </div>
+                    
+                  </div>
+            </div>
+            
+            <div class="pull-right" style="width:50%!important;">
+                <div class="panel panel-default">
+                    <div class="panel-heading clearfix">
+                        <h2 class="panel-title pull-left" >Result </h2>
+                        
+                        <button class="btn btn-default pull-right refresharea"><i class="glyphicon glyphicon-refresh"></i></button>
+                        <div class="input-group" style="padding-left:2%!important">
+                            <select id="columnSelection" class="form-control" >
+                              <option value="1">Single column</option>
+                              <option selected value="2">Two column</option>
+                              <option value="3">Three column</option>
+                            </select>
+                          </div>
+                        <h6 class="pull-left">-click refresh button to see live result and choose appropriate style from above dropdown</h6>
+                        
+                    </div>
+                    <div class="panel-body">
+                        <form class="render-wrap" id="render-wrap"></form>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <h2 class="panel-title pull-left" >Form Conditions </h2>
+                <button class="btn btn-default pull-right refreshrules"><i class="glyphicon glyphicon-refresh"></i></button>
+                <h6 class="pull-left">-add conditional selections, show/hide,etc to your form. Click refresh button on right to reflect any recent change added to the form</h6>
+            </div>
+            <div class="panel-body">
+                <div id="conditionDivMain">
+                  
+                  <div id="rulediv">
+                  </div>
+                  <a id="addNewrule">Add New Rule</a>
+                </div>
+            </div>
+          </div>
+        
+        <div class="action-buttons" id="viewHTMLButton" style="display: none;">
+          <button id="getJS" type="button">Generate HTML</button>
+          <a href="" id="a" style="display:none">download html</a>
+          <button id="edit-form">Edit Form</button>
+        </div>
+    </div>
+    <div class="row">
+        <button class="btn btn-default pull-right" id="downloadBtn">Download HTML</button>
+    </div>
+    
+  </div>
+  <div style="padding-bottom: 100px;">
+    
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="assets/js/vendor.js"></script>
+  <script src="assets/js/form-builder.min.js"></script>
+  <script src="assets/js/form-render.min.js"></script>
+  <script src="assets/js/jquery.rateyo.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+  <script src="assets/js/demo.js"></script>
+  <script type="text/javascript">
+    
+    $(document).ready(function() {
+    $('.selectcustom').select2();
+
+    
+
+});
+  </script>
+</body>
+
+</html>
