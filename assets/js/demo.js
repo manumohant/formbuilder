@@ -1,68 +1,133 @@
 jQuery(function($) {
   var i=0;
+  var submitrulenumber=0;
+  var computelogicnumber=0;
   var rulenumber=[];
   var rulenumbercnt=0;
   rulenumber[0]=[];
   var conditionArray = [];
-  var firstHalf = 
-  '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'+
-  '<html xmlns="http://www.w3.org/1999/xhtml">'+
-  '<head>'+
-  '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'+
-  '<title>{{FormHeading}}</title>'+
-  '<meta name="viewport" content="width=device-width, initial-scale=1.0" />'+
-  '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">'+
-  '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>'+
-  '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>'+
-  '<style>'+
-  '@media (min-width:1000px) and (max-width: 5000px) {'+
-    '.main-div {width:80%; margin-bottom:15px; margin-left:auto; margin-right:auto; display:inline-block; text-align:left;}'+
-    '.main-div h2 {color: #0099FF; font-weight: 600; margin: 0; font-size:16px; text-align:left; font-family: "Open Sans", sans-serif;}'+
-    '.left-div { width:25%; margin-bottom:15px; float:left; height:40px;}'+
-    '.left-div1 { width:73%; margin-bottom:15px; float:left; height:40px;}'+
-    '.left-div h2 { color: #393939; font-weight: 600; margin: 0; font-size:13px; text-align:left; font-family: "Open Sans", sans-serif;}'+
-    '.in-with { width:90%; height:26px}'+
-    '.in-with1 { width:92%; height: 32px;}'+
-    '.div-three { width:33%; float:left;}'+
-    '}'+
+  var firstHalf = `
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>{{FormHeading}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
   
-    '@media (min-width: 700px) and (max-width: 999px) {'+
-      '.main-div {width:95%; margin-bottom:10px; display:inline-block;}'+
-      '.main-div h2 {color: #0099FF; font-weight: 600; margin: 0; font-size:16px; text-align:left; font-family: "Open Sans", sans-serif;}'+
-      '.left-div { width:25%; float:left;  height:40px;}'+
-      '.left-div1 { width:73%; margin-bottom:15px; float:left; height:40px;}'+
-      '.left-div h2 { color: #393939; font-weight: 600; margin: 0; font-size:16px; font-family: "Open Sans", sans-serif;}'+
-      '.in-with { width:90%;}'+
-      '.in-with1 { width:92%; height: 25px;}'+
-      '.div-three { width:32%; float:left;}'+
-      '}'+
+  @media (min-width:1000px) and (max-width: 5000px) {
+    .main-div {width:80%; margin-bottom:15px; margin-left:auto; margin-right:auto; display:inline-block; text-align:left;}
+    .main-div h2 {color: #0099FF; font-weight: 600; margin: 0; font-size:16px; text-align:left; font-family: "Open Sans", sans-serif;}
+    .left-div { width:25%; margin-bottom:15px; float:left; height:40px;}
+    .left-div1 { width:73%; margin-bottom:15px; float:left; height:40px;}
+    .left-div h2 { color: #393939; font-weight: 600; margin: 0; font-size:13px; text-align:left; font-family: "Open Sans", sans-serif;}
+    .in-with { width:90%; height:26px}
+    .in-with1 { width:92%; height: 32px;}
+    .div-three { width:33%; float:left;}
+    }
   
-      '@media (min-width: 70px) and (max-width: 699px) {'+
-        '.hide1 { display:none !important; visibility:hidden !important;}'+
-        '.main-div {width:90%; margin-bottom:10px; display:inline-block;}'+
-        '.main-div h2 { color: #0099FF; font-weight: 600; margin: 0; font-size:16px; font-family: "Open Sans", sans-serif;}'+
-        '.left-div { width:100%; float:left; margin-bottom:10px; vertical-align:middle; font-size:12px; text-align:left;}'+
-  '.left-div1 { width:95%; float:left; margin-bottom:10px; vertical-align:middle; font-size:12px; text-align:left;}'+
-  '.in-with { width:95%;  height: 25px;}'+
-  '.in-with1 { width:97%; height: 28px;}'+
-  '}'+
-  'select option {width:300px; font-size: 12px; word-wrap: break-word;}'+
-  'b {color:grey;}'+
-  '</style>'+
-  '</head>'+
-  '<body style="font-family: "Open Sans", sans-serif; background-image:none;">'+
-  '<div style="width:100%;">'+
-  '<div style="text-align:center;">'+
-  '<h4>{{FormHeading}}</h4>'+
-    '</div>'+
-    '</div>'+
-  '<div style="margin:auto; text-align:center;">'+
-    '<div id="mainFormHolder" class="main-div" style="border:1px solid #ccc; border-radius: 13px; padding:10px;">';
+    @media (min-width: 700px) and (max-width: 999px) {
+      .main-div {width:95%; margin-bottom:10px; display:inline-block;}
+      .main-div h2 {color: #0099FF; font-weight: 600; margin: 0; font-size:16px; text-align:left; font-family: "Open Sans", sans-serif;}
+      .left-div { width:25%; float:left;  height:40px;}
+      .left-div1 { width:73%; margin-bottom:15px; float:left; height:40px;}
+      .left-div h2 { color: #393939; font-weight: 600; margin: 0; font-size:16px; font-family: "Open Sans", sans-serif;}
+      .in-with { width:90%;}
+      .in-with1 { width:92%; height: 25px;}
+      .div-three { width:32%; float:left;}
+      }
+  
+      @media (min-width: 70px) and (max-width: 699px) {
+        .hide1 { display:none !important; visibility:hidden !important;}
+        .main-div {width:90%; margin-bottom:10px; display:inline-block;}
+        .main-div h2 { color: #0099FF; font-weight: 600; margin: 0; font-size:16px; font-family: "Open Sans", sans-serif;}
+        .left-div { width:100%; float:left; margin-bottom:10px; vertical-align:middle; font-size:12px; text-align:left;}
+  .left-div1 { width:95%; float:left; margin-bottom:10px; vertical-align:middle; font-size:12px; text-align:left;}
+  .in-with { width:95%;  height: 25px;}
+  .in-with1 { width:97%; height: 28px;}
+  }
+  select option {width:300px; font-size: 12px; word-wrap: break-word;}
+  b {color:grey;}
+  </style>
+  </head>
+  <body style="font-family: 'Open Sans', sans-serif; background-image:none;">
+  <div style="width:100%;">
+  <div style="text-align:center;">
+  <h4>{{FormHeading}}</h4>
+    </div>
+    </div>
+  <div style="margin:auto; text-align:center;">
+    <div id="mainFormHolder" class="main-div" style="border:1px solid #ccc; border-radius: 13px; padding:10px;">;`;
     var secondHalf=
     `</div>
     </div>
     </body>
     </html>`;
+
+  var validationScriptString = `
+  function IsEmpty(val)
+  {
+    if(!val || val=='') return true;
+    else return false;
+  }
+  function IsAlphabet(val)
+  {
+    if(IsEmpty(val)) return false;
+    
+    var letters = /^[A-Za-z]+$/;
+    if(val.match(letters)) return true;
+    else return false;
+  }
+  function IsNumeric(val)
+  {
+    if(IsEmpty(val)) return false;
+    
+    if(isNaN(val)) return false;
+    else return true;
+  }
+  function IsAlphaNumeric(val)
+  {
+    if(IsEmpty(val)) return false;
+    
+    var letterNumber = /^[0-9a-zA-Z]+$/;
+    if(val.match(letterNumber)) return true;
+    else return false;
+  }
+  function IsValidEMail(val) 
+  {
+    if(IsEmpty(val)) return false;
+    
+    var atpos = val.indexOf("@");
+    var dotpos = val.lastIndexOf(".");
+    if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length) {
+        return false;
+    }
+    else{
+      return true;
+    }
+      
+  }
+  function IsValidPhone(str) 
+  {
+    if(IsEmpty(str)) return false;
+    if(IsAlphabet(str)) return false;
+    str = str.replace(/[^a-zA-Z0-9]/g, '');
+    if(IsNumeric(str)) return true;
+    return false;
+  }
+  function IsValidURL(string)
+  {
+    try {
+      new URL(string);
+      return true;
+    } catch (_) {
+      return false;  
+    }
+  }
+  `;
   addRule();
 
   var fields = [
@@ -312,6 +377,18 @@ jQuery(function($) {
       dropdownOptionsGenerator(frmData,wantToField);
       lclCnt++;
     }
+    
+    $("#submitButtonList").empty();
+    var submitButtonLst1=document.getElementById("submitButtonList");
+    dropdownOptionsGenerator(frmData,submitButtonLst1);
+    var ct=0;
+    for(ct=0;ct<=submitrulenumber;ct++){
+      $("#submitConditionInputList"+ct).empty();
+      var subconlist=document.getElementById("submitConditionInputList"+ct);
+      dropdownOptionsGenerator(frmData,subconlist);
+    }
+
+    
   }
 
   fbPromise.then(function(fb) {
@@ -409,6 +486,7 @@ jQuery(function($) {
   function addRule(){
     
     ruleCreator();
+    
     $('.selectcustom').select2();
     rulenumber[rulenumbercnt]=[];
     
@@ -416,6 +494,7 @@ jQuery(function($) {
   
   function dropdownOptionsGenerator(frmData,optionField)
   {
+    if(!optionField) return;
     frmData.forEach(function(elmt){
       if(elmt.name){
         var opt = document.createElement('option');
@@ -538,8 +617,11 @@ jQuery(function($) {
       i++;
       $('.selectcustom').select2();
     };
+
+    
     
   }
+
   function conditionCreator(conditiondiv,cnt)
   {
     var ifLabel=document.createElement("label");
@@ -639,7 +721,137 @@ jQuery(function($) {
       
       
     }
+    // form submit validation codes
+    var submitstring="";
+    var onclickButtonTriggerString="var onSubmitClick=validation";
+    if(submitrulenumber>=0)
+    {
+      submitstring+="function validation(){";
+      var submitButton=document.getElementById("submitButtonList");
+      var val = submitButton.options[submitButton.selectedIndex].value;
+      onclickButtonTriggerString += `
+      $('#`+val+`').bind('click',onSubmitClick);`;
+      var cont = 0
+      for(cont=0;cont<=submitrulenumber;cont++)
+      {
+        var submitConditionInputList = document.getElementById("submitConditionInputList"+cont);
+        if(!submitConditionInputList) continue;
+        var submitConditionInputVal = submitConditionInputList.options[submitConditionInputList.selectedIndex].value;
+  
+        var submitConditionOperationList=document.getElementById("submitConditionOperationList"+cont);
+        var submitConditionOperationVal =  submitConditionOperationList.options[submitConditionOperationList.selectedIndex].value;
+  
+        var submitConditionValueList=document.getElementById("submitConditionValueList"+cont);
+        var submitConditionValueVal=submitConditionValueList.options[submitConditionValueList.selectedIndex].value;
+        
+        var operator="";
+        if(submitConditionOperationVal=="Is") operator="!";
+        if(submitConditionValueVal=="Not Empty")
+        {
+          submitstring+=`
+          if(`+operator+operator+`IsEmpty(document.getElementsByName('`+submitConditionInputVal+`')[0].value))
+          {
+            alert("value should not be empty ");
+            return false;
+          }`;
+        }
+        else if(submitConditionValueVal=="Alphabet")
+        {
+          submitstring+=`if(`+operator+`IsAlphabet(document.getElementsByName('`+submitConditionInputVal+`')[0].value))
+          {
+            alert("value must be an alphabet");
+            return false;
+          }`;
+        }
+        else if(submitConditionValueVal=="Numeric")
+        {
+          submitstring+=`if(`+operator+`IsNumeric(document.getElementsByName('`+submitConditionInputVal+`')[0].value))
+          {
+            alert("value must be an numeric");
+            return false;
+          }`;
+        }
+        else if(submitConditionValueVal=="Alpha numeric")
+        {
+          submitstring+=`if(`+operator+`IsAlphaNumeric(document.getElementsByName('`+submitConditionInputVal+`')[0].value))
+          {
+            alert("value must be alpha numeric");
+            return false;
+          }`;
+        }
+        else if(submitConditionValueVal=="EMail")
+        {
+          submitstring+=`if(`+operator+`IsValidEMail(document.getElementsByName('`+submitConditionInputVal+`')[0].value))
+          {
+            alert("Please enter valid email");
+            return false;
+          }`;
+        }
+        else if(submitConditionValueVal=="Phone Number")
+        {
+          submitstring+=`if(`+operator+`IsValidPhone(document.getElementsByName('`+submitConditionInputVal+`')[0].value))
+          {
+            alert("Please enter valid phone number");
+            return false;
+          }`;
+        }
+        else if(submitConditionValueVal=="URL")
+        {
+          submitstring+=`if(`+operator+`IsValidURL(document.getElementsByName('`+submitConditionInputVal+`')[0].value))
+          {
+            alert("Please enter valid URL");
+            return false;
+          }`;
+        }
+        
+      }
+      
 
+
+
+      submitstring+=`
+      return true;
+    }`;
+    }
+    //form compute logic
+    var computelogicstring="";
+    if(computelogicnumber>=0)
+    {
+      var ct=0;
+      for(ct=0;ct<=computelogicnumber;ct++)
+      {
+        var computelogicvalueofList = document.getElementById("computelogicvalueof"+ct);
+        if(!computelogicvalueofList) continue;
+        var computelogicvalueofVal = computelogicvalueofList.options[computelogicvalueofList.selectedIndex].value;
+  
+        var fromvalueofList = document.getElementById("fromvalueof"+ct);
+        var fromvalueofListVal = fromvalueofList.options[fromvalueofList.selectedIndex].value;
+
+        var oprList = document.getElementById("operand"+ct);
+        var operandVal = oprList.options[oprList.selectedIndex].value;
+        
+        var inputVal = document.getElementById("inputval"+ct).value;
+
+        computelogicstring+=`
+        var fromvalueofListVal`+ct+` = document.getElementById('`+fromvalueofListVal+`');
+        var computelogicvalueofVal`+ct+` = document.getElementById('`+computelogicvalueofVal+`');
+        
+        computelogicvalueofVal`+ct+`.readOnly =true;
+        fromvalueofListVal`+ct+`.addEventListener("change", function(){
+          var compval = fromvalueofListVal`+ct+`.value;
+          var opr = '`+operandVal+`';
+          var inputval = `+inputVal+`;
+          computelogicvalueofVal`+ct+`.value = eval(compval+opr+inputval);
+        }); 
+        
+        `;
+      }
+     
+    }
+    str+=submitstring;
+    str+=computelogicstring;
+    str+=onclickButtonTriggerString;
+    str+=validationScriptString;
     js.innerHTML="(function(){"+str+"})()";
     try{
       var item = document.getElementById("jsScript");
@@ -819,5 +1031,110 @@ jQuery(function($) {
     });
     renderJS();
   })
+document.getElementById("addComputeLogic").onclick=computeRuleCreator;
+function computeRuleCreator()
+{
+  var parentDiv=document.getElementById("computeLogicDiv");
+  var scopeDiv = document.createElement("div");
+  scopeDiv.id="scopediv"+computelogicnumber;
+  scopeDiv.style.margin="10px";
+  var scopelabel = document.createElement("label");
+  scopelabel.innerHTML="value of"
+  scopelabel.style.paddingRight="10px";
+
+  var computelogicvalueof = document.createElement("select");
+  computelogicvalueof.id = "computelogicvalueof"+computelogicnumber;
+  computelogicvalueof.style.width="20%";
+  computelogicvalueof.className="selectcustom";
+  if(formBuilder){
+    var frmData=JSON.parse(formBuilder.actions.getData('json', true));
+    dropdownOptionsGenerator(frmData,computelogicvalueof);
+  }
+  var fromlabel = document.createElement("label");
+  fromlabel.innerHTML="From value of "
+  fromlabel.style.paddingRight="10px";
+
+  var fromvalueof = document.createElement("select");
+  fromvalueof.id = "fromvalueof"+computelogicnumber;
+  fromvalueof.style.width="20%";
+  fromvalueof.style.paddingRight="10px";
+  fromvalueof.className="selectcustom";
+  if(formBuilder){
+    var frmData=JSON.parse(formBuilder.actions.getData('json', true));
+    dropdownOptionsGenerator(frmData,fromvalueof);
+  }
+
+
+  var operand = document.createElement("select");
+  operand.id = "operand"+computelogicnumber;
+  operand.style.width="5%";
+  operand.style.paddingRight="10px";
+  operand.className="selectcustom";
+  operand.innerHTML=`<option>*</option>
+  <option>+</option>
+  <option>-</option>
+  <option>/</option>`;
+  var inputval = document.createElement("input");
+  inputval.id="inputval"+computelogicnumber;
+  inputval.style.width="20%";
+  inputval.style.paddingRight="10px";
+  scopeDiv.appendChild(scopelabel);
+  scopeDiv.appendChild(computelogicvalueof);
+  scopeDiv.appendChild(fromlabel);
+  scopeDiv.appendChild(fromvalueof);
+  scopeDiv.appendChild(operand);
+  scopeDiv.appendChild(inputval);
+
+  parentDiv.appendChild(scopeDiv);
+
+  $('.selectcustom').select2();
+  computelogicnumber++;
+}
+document.getElementById("addformrule").onclick=  function submitruleCreator()
+{
+  var parentDiv=document.getElementById("submitValidationconditions");
+  var scopeDiv = document.createElement("div");
+  scopeDiv.id="scopediv"+submitrulenumber;
+  scopeDiv.style.margin="10px";
+  var scopelabel1 = document.createElement("label");
+  scopelabel1.innerHTML="If"
+  scopelabel1.style.paddingRight="10px";
+  var submitConditionInputList = document.createElement("select");
+  submitConditionInputList.id = "submitConditionInputList"+submitrulenumber;
+  submitConditionInputList.style.width="20%";
+  submitConditionInputList.className="selectcustom";
+  if(formBuilder){
+    var frmData=JSON.parse(formBuilder.actions.getData('json', true));
+    dropdownOptionsGenerator(frmData,submitConditionInputList);
+  }
+
+  var submitConditionOperationList = document.createElement("select");
+  submitConditionOperationList.id = "submitConditionOperationList"+submitrulenumber;
+  submitConditionOperationList.style.width="10%";
+  submitConditionOperationList.className="selectcustom";
+  submitConditionOperationList.innerHTML=`<option>Is</option>
+  <option>Is Not</option>`;
+
+  var submitConditionValueList = document.createElement("select");
+  submitConditionValueList.id = "submitConditionValueList"+submitrulenumber;
+  submitConditionValueList.style.width="20%";
+  submitConditionValueList.className="selectcustom";
+  submitConditionValueList.innerHTML=`<option>Not Empty</option>
+  <option>Alphabet</option>
+  <option>Numeric</option>
+  <option>Alpha numeric</option>
+  <option>EMail</option>
+  <option>Phone Number</option>
+  <option>URL</option>`;
+
+  scopeDiv.appendChild(scopelabel1);
+  scopeDiv.appendChild(submitConditionInputList);
+  scopeDiv.appendChild(submitConditionOperationList);
+  scopeDiv.appendChild(submitConditionValueList);
+  parentDiv.appendChild(scopeDiv);
+
+  $('.selectcustom').select2();
+  submitrulenumber++;
+};
   
 });

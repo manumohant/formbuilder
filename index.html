@@ -55,7 +55,7 @@
                     <div class="panel-heading clearfix">
                         <h2 class="panel-title pull-left" >Result </h2>
                         
-                        <button class="btn btn-default pull-right refresharea"><i class="glyphicon glyphicon-refresh"></i></button>
+                        <button class="btn btn-default pull-right refresharea"><i class="glyphicon glyphicon-play"></i></button>
                         <div class="input-group" style="padding-left:2%!important">
                             <select id="columnSelection" class="form-control" >
                               <option value="1">Single column</option>
@@ -82,11 +82,57 @@
                 <h6 class="pull-left">-add conditional selections, show/hide,etc to your form. Click refresh button on right to reflect any recent change added to the form</h6>
             </div>
             <div class="panel-body">
-                <div id="conditionDivMain">
-                  
-                  <div id="rulediv">
-                  </div>
-                  <a id="addNewrule">Add New Rule</a>
+                <div class="panel panel-default">
+                    <div class="panel-heading clearfix">
+                        <h2 class="panel-title pull-left">Conditions to render form</h2>
+                    </div>
+                    <div>
+                        <div id="conditionDivMain">
+                            <div id="rulediv">
+                            </div>
+                            <a id="addNewrule">Add New Rule</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading clearfix">
+                        <h2 class="panel-title pull-left">Form submit validation</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div id="submitConditionDiv">
+                            <div>
+                                <label>When I click submit button</label>
+                                <select style="width:20%" class="selectcustom" id="submitButtonList">
+
+                                </select>
+                                <label>perform below checks and alert me if any condition is wrong</label>
+                            </div>
+                            <div id="submitValidationconditions">
+                                
+                            </div>
+                            <a id="addformrule" >add new form validation rule</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading clearfix">
+                        <h2 class="panel-title pull-left">Compute Logic</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <label>Derive  </label>
+                        </div>
+                        <div id="computeLogicDiv">
+                           
+                        </div>
+                        <a id="addComputeLogic">add new compute logic</a>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <button class="btn btn-default pull-right" id="downloadBtn">Download HTML</button>
                 </div>
             </div>
           </div>
@@ -97,9 +143,7 @@
           <button id="edit-form">Edit Form</button>
         </div>
     </div>
-    <div class="row">
-        <button class="btn btn-default pull-right" id="downloadBtn">Download HTML</button>
-    </div>
+    
     
   </div>
   <div style="padding-bottom: 100px;">
