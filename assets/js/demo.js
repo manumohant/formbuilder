@@ -375,8 +375,19 @@ jQuery(function($) {
       $("#wantToFields"+lclCnt).empty();
       var wantToField = document.getElementById("wantToFields"+lclCnt);
       dropdownOptionsGenerator(frmData,wantToField);
-      lclCnt++;
+      
     }
+    for(lclCnt=0;lclCnt<=computelogicnumber;lclCnt++){
+      $("#computelogicvalueof"+lclCnt).empty();
+      var computelogicvalueof = document.getElementById("computelogicvalueof"+lclCnt);
+      dropdownOptionsGenerator(frmData,computelogicvalueof);
+
+      $("#fromvalueof"+lclCnt).empty();
+      var fromvalueof = document.getElementById("fromvalueof"+lclCnt);
+      dropdownOptionsGenerator(frmData,fromvalueof);
+      
+    }
+    
     
     $("#submitButtonList").empty();
     var submitButtonLst1=document.getElementById("submitButtonList");
@@ -708,6 +719,7 @@ jQuery(function($) {
   function renderJS()
   {
     var js=document.createElement("script");
+    js.type="text/javascript";
     js.id="jsScript";
     var str="";
     for(var k in rulenumber)
@@ -723,11 +735,11 @@ jQuery(function($) {
     }
     // form submit validation codes
     var submitstring="";
-    var onclickButtonTriggerString="var onSubmitClick=validation";
-    if(submitrulenumber>=0)
+    var onclickButtonTriggerString="var onSubmitClick=validation;";
+    var submitButton=document.getElementById("submitButtonList");
+    if(submitButton.options[submitButton.selectedIndex])
     {
       submitstring+="function validation(){";
-      var submitButton=document.getElementById("submitButtonList");
       var val = submitButton.options[submitButton.selectedIndex].value;
       onclickButtonTriggerString += `
       $('#`+val+`').bind('click',onSubmitClick);`;
@@ -822,6 +834,7 @@ jQuery(function($) {
       {
         var computelogicvalueofList = document.getElementById("computelogicvalueof"+ct);
         if(!computelogicvalueofList) continue;
+        if(!computelogicvalueofList.options[computelogicvalueofList.selectedIndex]) continue;
         var computelogicvalueofVal = computelogicvalueofList.options[computelogicvalueofList.selectedIndex].value;
   
         var fromvalueofList = document.getElementById("fromvalueof"+ct);
@@ -831,7 +844,7 @@ jQuery(function($) {
         var operandVal = oprList.options[oprList.selectedIndex].value;
         
         var inputVal = document.getElementById("inputval"+ct).value;
-
+        if(!inputVal)continue;
         computelogicstring+=`
         var fromvalueofListVal`+ct+` = document.getElementById('`+fromvalueofListVal+`');
         var computelogicvalueofVal`+ct+` = document.getElementById('`+computelogicvalueofVal+`');
@@ -852,7 +865,10 @@ jQuery(function($) {
     str+=computelogicstring;
     str+=onclickButtonTriggerString;
     str+=validationScriptString;
-    js.innerHTML="(function(){"+str+"})()";
+    //js.innerHTML="(function(){"+str+"})()";
+    js.innerHTML=`
+    `+str+`
+    `;
     try{
       var item = document.getElementById("jsScript");
       item.parentNode.removeChild(item);
@@ -871,8 +887,12 @@ jQuery(function($) {
     var button_replace="fb-button form-group "+col_class;
     var re = new RegExp(button_replace,"g");
     document.getElementById("render-wrap").innerHTML=innerHTML.replace(re, 'fb-button form-group col-sm-12');
-    var str=document.getElementById("render-wrap").outerHTML;
-    download(str);
+    var noteLabel=document.createElement("label");
+    noteLabel.innerHTML="Note:Please avoid using special characters like %,&,etc in input values";
+    noteLabel.className="col-sm-12";
+    document.getElementById("rendered-form").appendChild(noteLabel);
+    // var str=document.getElementById("render-wrap").outerHTML;
+    // download(str);
   }
   function checkAgainst(action,con,k)
   {
