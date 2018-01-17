@@ -51,16 +51,22 @@ jQuery(function($) {
   }
   select option {width:300px; font-size: 12px; word-wrap: break-word;}
   b {color:grey;}
+  img {
+    display: block;
+    margin: 0 auto;
+}
   </style>
   </head>
   <body style="font-family: 'Open Sans', sans-serif; background-image:none;">
-  <div style="width:100%;">
+  
+  <div style="margin:auto; text-align:center;">
+    <div id="mainFormHolder" class="main-div" style="border:1px solid #ccc; border-radius: 13px; padding:10px;">
+    <div style="width:100%;">
   <div style="text-align:center;">
   <h4>{{FormHeading}}</h4>
     </div>
     </div>
-  <div style="margin:auto; text-align:center;">
-    <div id="mainFormHolder" class="main-div" style="border:1px solid #ccc; border-radius: 13px; padding:10px;">;`;
+    `;
     var secondHalf=
     `</div>
     </div>
@@ -372,31 +378,40 @@ jQuery(function($) {
     var frmData=JSON.parse(formBuilder.actions.getData('json', true));
     var lclCnt=0;
     for(lclCnt=0;lclCnt<=rulenumbercnt;lclCnt++){
-      $("#wantToFields"+lclCnt).empty();
-      var wantToField = document.getElementById("wantToFields"+lclCnt);
-      dropdownOptionsGenerator(frmData,wantToField);
+      
+      
+      //$("#wantToFields"+lclCnt).empty();
+      var wantToField = $("#wantToFields"+lclCnt);
+      //wantToField.empty();
+      dropdownOptionsGenerator(frmData,wantToField,"update");
       
     }
     for(lclCnt=0;lclCnt<=computelogicnumber;lclCnt++){
-      $("#computelogicvalueof"+lclCnt).empty();
-      var computelogicvalueof = document.getElementById("computelogicvalueof"+lclCnt);
-      dropdownOptionsGenerator(frmData,computelogicvalueof);
+      
+      var computelogicvalueof = $("#computelogicvalueof"+lclCnt);
+      //computelogicvalueof.empty();
+      dropdownOptionsGenerator(frmData,computelogicvalueof,"update");
 
-      $("#fromvalueof"+lclCnt).empty();
-      var fromvalueof = document.getElementById("fromvalueof"+lclCnt);
-      dropdownOptionsGenerator(frmData,fromvalueof);
+      var fromvalueof = $("#fromvalueof"+lclCnt);
+      //fromvalueof.empty();
+      dropdownOptionsGenerator(frmData,fromvalueof,"update");
+
+      var inputVal = $("#inputval"+lclCnt);
+      
+      dropdownOptionsGenerator(frmData,inputVal,"update");
       
     }
     
     
-    $("#submitButtonList").empty();
-    var submitButtonLst1=document.getElementById("submitButtonList");
-    dropdownOptionsGenerator(frmData,submitButtonLst1);
+    // $("#submitButtonList").empty();
+    // var submitButtonLst1=document.getElementById("submitButtonList");
+    // dropdownOptionsGenerator(frmData,submitButtonLst1);
     var ct=0;
     for(ct=0;ct<=submitrulenumber;ct++){
-      $("#submitConditionInputList"+ct).empty();
-      var subconlist=document.getElementById("submitConditionInputList"+ct);
-      dropdownOptionsGenerator(frmData,subconlist);
+      
+      
+      var subconlist=$("#submitConditionInputList"+ct);
+      dropdownOptionsGenerator(frmData,subconlist,"update");
     }
 
     
@@ -460,11 +475,13 @@ jQuery(function($) {
       for(var k in rulenumber)
       {
         var iWantTo=document.getElementById("iWantTo"+k);
-        var val = iWantTo.options[iWantTo.selectedIndex].value
+        if(iWantTo){
+          var val = iWantTo.options[iWantTo.selectedIndex].value
 
-        var conditionSelect=document.getElementById("conditionSelect"+k);
-        var conditionSelectValue = conditionSelect.options[conditionSelect.selectedIndex].value
-        str += checkAgainst(val,conditionSelectValue,k);
+          var conditionSelect=document.getElementById("conditionSelect"+k);
+          var conditionSelectValue = conditionSelect.options[conditionSelect.selectedIndex].value
+          str += checkAgainst(val,conditionSelectValue,k);
+        }
         
         
       }
@@ -503,17 +520,31 @@ jQuery(function($) {
     
   }
   
-  function dropdownOptionsGenerator(frmData,optionField)
+  function dropdownOptionsGenerator(frmData,optionField,calledFrom)
   {
+    var id="";
+    var vals=[];
     if(!optionField) return;
+      if(calledFrom=="update"){
+      var id = optionField.attr("id");
+      $("#"+id+" :selected").each(function(){
+        vals.push($(this).val()); 
+      });
+      optionField.empty();
+    }
+    
     frmData.forEach(function(elmt){
       if(elmt.name){
         var opt = document.createElement('option');
         opt.value = elmt.name;
         opt.innerHTML = elmt.name;
-        optionField.appendChild(opt);
+        optionField.append(opt);
       }
     });
+    if(calledFrom=="update"){
+      $("#"+id).val(vals);
+    }
+    //optionField.value=temp_data;
   }
   function equalsOptionGenerator(optionField)
   {
@@ -563,7 +594,7 @@ jQuery(function($) {
     wantToFields.style.paddingRight="10px";
     if(formBuilder){
       var frmData=JSON.parse(formBuilder.actions.getData('json', true));
-      dropdownOptionsGenerator(frmData,wantToFields);
+      dropdownOptionsGenerator(frmData,wantToFields,"new");
     }
 
     div1.appendChild(wantTolabel);
@@ -601,6 +632,7 @@ jQuery(function($) {
     var addLink=document.createElement("a");
     addLink.innerHTML="add new condition";
     addLink.id="addConditionDiv"+rulenumbercnt;
+    addLink.className="add add-opt";
     addLink.style.margin="10px";
 
     borderDiv.appendChild(div1);
@@ -614,7 +646,7 @@ jQuery(function($) {
       $("#wantToFields"+cnt).empty();
       var frmData=JSON.parse(formBuilder.actions.getData('json', true));
       var wantToField = document.getElementById("wantToFields"+cnt);
-      dropdownOptionsGenerator(frmData,wantToField);
+      dropdownOptionsGenerator(frmData,wantToField,"new");
       
       
     };
@@ -658,7 +690,7 @@ jQuery(function($) {
     removeLink.innerHTML="Remove";
     
     var frmData=JSON.parse(formBuilder.actions.getData('json', true));
-    dropdownOptionsGenerator(frmData,selectList);
+    dropdownOptionsGenerator(frmData,selectList,"new");
     equalsOptionGenerator(conditionList);
     div.appendChild(ifLabel);
     div.appendChild(selectList);
@@ -701,6 +733,10 @@ jQuery(function($) {
       templates: templates
     });
     renderJS();
+
+    var toberemoved=document.getElementById("toberemoved");
+    toberemoved.parentElement.removeChild(toberemoved );
+
     var text=document.getElementById("render-wrap").outerHTML;
     var head = document.getElementById('head').value;
     if(!head)head="";
@@ -714,7 +750,7 @@ jQuery(function($) {
     link.click();
     document.body.removeChild(link);
     delete link;
-
+    renderJS();
   });
   function renderJS()
   {
@@ -725,24 +761,27 @@ jQuery(function($) {
     for(var k in rulenumber)
     {
       var iWantTo=document.getElementById("iWantTo"+k);
-      var val = iWantTo.options[iWantTo.selectedIndex].value
+      if(iWantTo){
+        var val = iWantTo.options[iWantTo.selectedIndex].value
 
-      var conditionSelect=document.getElementById("conditionSelect"+k);
-      var conditionSelectValue = conditionSelect.options[conditionSelect.selectedIndex].value
-      str += checkAgainst(val,conditionSelectValue,k);
+        var conditionSelect=document.getElementById("conditionSelect"+k);
+        var conditionSelectValue = conditionSelect.options[conditionSelect.selectedIndex].value
+        str += checkAgainst(val,conditionSelectValue,k);
+      }
       
       
     }
     // form submit validation codes
     var submitstring="";
     var onclickButtonTriggerString="var onSubmitClick=validation;";
-    var submitButton=document.getElementById("submitButtonList");
-    if(submitButton.options[submitButton.selectedIndex])
+    //var submitButton=document.getElementById("submitButtonList");
+    //if(submitButton.options[submitButton.selectedIndex])
+    if(true)
     {
       submitstring+="function validation(){";
-      var val = submitButton.options[submitButton.selectedIndex].value;
+      //var val = submitButton.options[submitButton.selectedIndex].value;
       onclickButtonTriggerString += `
-      $('#`+val+`').bind('click',onSubmitClick);`;
+      $('#tempsubmitbutton').bind('click',onSubmitClick);`;
       var cont = 0
       for(cont=0;cont<=submitrulenumber;cont++)
       {
@@ -843,17 +882,27 @@ jQuery(function($) {
         var oprList = document.getElementById("operand"+ct);
         var operandVal = oprList.options[oprList.selectedIndex].value;
         
-        var inputVal = document.getElementById("inputval"+ct).value;
-        if(!inputVal)continue;
+        var rightValueList=document.getElementById("inputval"+ct);
+        var rightValueListVal = rightValueList.options[rightValueList.selectedIndex].value;
+        
+        if(!rightValueListVal)continue;
+
         computelogicstring+=`
         var fromvalueofListVal`+ct+` = document.getElementById('`+fromvalueofListVal+`');
+        var rightValueListVal`+ct+` = document.getElementById('`+rightValueListVal+`');
         var computelogicvalueofVal`+ct+` = document.getElementById('`+computelogicvalueofVal+`');
         
         computelogicvalueofVal`+ct+`.readOnly =true;
         fromvalueofListVal`+ct+`.addEventListener("change", function(){
           var compval = fromvalueofListVal`+ct+`.value;
           var opr = '`+operandVal+`';
-          var inputval = `+inputVal+`;
+          var inputval = rightValueListVal`+ct+`.value;
+          computelogicvalueofVal`+ct+`.value = eval(compval+opr+inputval);
+        }); 
+        rightValueListVal`+ct+`.addEventListener("change", function(){
+          var compval = fromvalueofListVal`+ct+`.value;
+          var opr = '`+operandVal+`';
+          var inputval = rightValueListVal`+ct+`.value;
           computelogicvalueofVal`+ct+`.value = eval(compval+opr+inputval);
         }); 
         
@@ -865,8 +914,9 @@ jQuery(function($) {
     str+=computelogicstring;
     str+=onclickButtonTriggerString;
     str+=validationScriptString;
+    //var rowJS=document.getElementById("textJS").value;
     //js.innerHTML="(function(){"+str+"})()";
-    js.innerHTML=`
+    js.text=`
     `+str+`
     `;
     try{
@@ -877,22 +927,36 @@ jQuery(function($) {
 
     }
     var col_class="col-sm-6";
-    var columnNumber = $("#columnSelection").val();
+    //var columnNumber = $("#columnSelection").val();commented out to remove column view of form
+    var columnNumber = 1;
     if(columnNumber==1)col_class="col-sm-12";
     else if(columnNumber==3)col_class="col-sm-4";
     else col_class="col-sm-6";
-    document.getElementById("render-wrap").appendChild(js);
     var innerHTML = document.getElementById("render-wrap").innerHTML;
     innerHTML = innerHTML.replace(/form-group/g, 'form-group '+col_class);
     var button_replace="fb-button form-group "+col_class;
     var re = new RegExp(button_replace,"g");
     document.getElementById("render-wrap").innerHTML=innerHTML.replace(re, 'fb-button form-group col-sm-12');
-    var noteLabel=document.createElement("label");
-    noteLabel.innerHTML="Note:Please avoid using special characters like %,&,etc in input values";
-    noteLabel.className="col-sm-12";
-    document.getElementById("rendered-form").appendChild(noteLabel);
-    // var str=document.getElementById("render-wrap").outerHTML;
-    // download(str);
+    // var noteLabel=document.createElement("label");
+    // noteLabel.innerHTML="Note:Please avoid using special characters like %,&,etc in input values";
+    // noteLabel.className="col-sm-12";
+    // document.getElementById("rendered-form").appendChild(noteLabel);
+    var logoURL = document.getElementById("logourl").value;
+    if(logoURL&& logoURL!='')
+    {
+      var img = document.createElement("img");
+      img.src=logoURL;
+      document.getElementById("rendered-form").insertBefore(img, document.getElementById("rendered-form").firstChild);
+    }
+    var tempDiv = document.createElement("div");
+    tempDiv.id="toberemoved";
+    
+    var btn = `<button type="button" class="btn btn-primary" name="tempsubmitbutton" style="primary" id="tempsubmitbutton">Submit</button>`;
+    tempDiv.innerHTML=btn;
+    document.getElementById("render-wrap").appendChild(tempDiv);
+    //
+    document.getElementById("render-wrap").appendChild(js);
+    
   }
   function checkAgainst(action,con,k)
   {
@@ -905,7 +969,7 @@ jQuery(function($) {
 
         selectedValues.push($(this).val()); 
     });
-    if(selectedValues.length<=0) return"";
+    if(selectedValues.length<=0) return "";
     selectedValues.forEach(function(flds){
       if(action=="Show")JSString+='[].forEach.call(document.getElementsByClassName("form-group field-'+flds+'"),function(sel){sel.style.display="none"});';
       else if(action=="Hide")JSString+='[].forEach.call(document.getElementsByClassName("form-group field-'+flds+'"),function(sel){sel.style.display="block"});';
@@ -1035,22 +1099,22 @@ jQuery(function($) {
         else
         JSString+='[].forEach.call(document.getElementsByClassName("form-group field-'+flds+'"),function(sel){sel.style.display="none"});';
       });
-      JSString+='}';
+      JSString+=`}`;
     }
 
-    JSString+="}";
+    JSString+=`}`;
     
     return JSString;
   }
-
-  document.getElementById("columnSelection").addEventListener("change",function(){
-    //updateFieldDropdowns();
-    $('.render-wrap').formRender({
-      formData: formBuilder.formData,
-      templates: templates
-    });
-    renderJS();
-  })
+  //commented out to remove support for column view render
+  // document.getElementById("columnSelection").addEventListener("change",function(){
+  //   //updateFieldDropdowns();
+  //   $('.render-wrap').formRender({
+  //     formData: formBuilder.formData,
+  //     templates: templates
+  //   });
+  //   renderJS();
+  // })
 document.getElementById("addComputeLogic").onclick=computeRuleCreator;
 function computeRuleCreator()
 {
@@ -1068,7 +1132,7 @@ function computeRuleCreator()
   computelogicvalueof.className="selectcustom";
   if(formBuilder){
     var frmData=JSON.parse(formBuilder.actions.getData('json', true));
-    dropdownOptionsGenerator(frmData,computelogicvalueof);
+    dropdownOptionsGenerator(frmData,computelogicvalueof,"new");
   }
   var fromlabel = document.createElement("label");
   fromlabel.innerHTML="From value of "
@@ -1081,7 +1145,7 @@ function computeRuleCreator()
   fromvalueof.className="selectcustom";
   if(formBuilder){
     var frmData=JSON.parse(formBuilder.actions.getData('json', true));
-    dropdownOptionsGenerator(frmData,fromvalueof);
+    dropdownOptionsGenerator(frmData,fromvalueof,"new");
   }
 
 
@@ -1094,10 +1158,15 @@ function computeRuleCreator()
   <option>+</option>
   <option>-</option>
   <option>/</option>`;
-  var inputval = document.createElement("input");
+  var inputval = document.createElement("select");
   inputval.id="inputval"+computelogicnumber;
   inputval.style.width="20%";
   inputval.style.paddingRight="10px";
+  inputval.className="selectcustom";
+  if(formBuilder){
+    var frmData=JSON.parse(formBuilder.actions.getData('json', true));
+    dropdownOptionsGenerator(frmData,inputval,"new");
+  }
   scopeDiv.appendChild(scopelabel);
   scopeDiv.appendChild(computelogicvalueof);
   scopeDiv.appendChild(fromlabel);
@@ -1125,7 +1194,7 @@ document.getElementById("addformrule").onclick=  function submitruleCreator()
   submitConditionInputList.className="selectcustom";
   if(formBuilder){
     var frmData=JSON.parse(formBuilder.actions.getData('json', true));
-    dropdownOptionsGenerator(frmData,submitConditionInputList);
+    dropdownOptionsGenerator(frmData,submitConditionInputList,"new");
   }
 
   var submitConditionOperationList = document.createElement("select");

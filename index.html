@@ -35,12 +35,27 @@
             <option value="vi-VN">tiếng việt</option>
             <option value="zh-TW">台語</option>
           </select> -->
-        <div style="width:50%; padding-bottom:1%;">
-            <h2>Form Heading</h2>
-            <input class="form-control" type="text" id="head" name="head">
+        <div style="width:100%; padding-bottom:1%;">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="InputFieldA" class="col-md-3">Form Heading</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control col-md-12" id="head" name="head" placeholder="form heading">
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="InputFieldB" class="col-md-3">Logo URL</label>
+                    <div class="col-md-12">
+                    <input type="text" class="form-control col-md-12" id="logourl" placeholder="Logo URL">
+                    </div>
+                </div>
+            </div>
+            
         </div>
+        
         <div>
-            <div  class=" pull-left" style="width:50%!important;">
+            <div  class=" pull-left" style="width:60%!important;">
                 <div class="panel panel-default">
                     <div class="panel-heading">Construct your form<h6>-click 'Execute/Refresh' button to see live result on the right side</h6></div>
                     <div class="panel-body">
@@ -50,19 +65,19 @@
                   </div>
             </div>
             
-            <div class="pull-right" style="width:50%!important;">
+            <div class="pull-right" style="width:40%!important;">
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         <h2 class="panel-title pull-left" >Result </h2>
                         
                         <button class="btn btn-default pull-right refresharea"><i class="glyphicon glyphicon-play"></i></button>
-                        <div class="input-group" style="padding-left:2%!important">
+                        <!-- <div class="input-group" style="padding-left:2%!important">
                             <select id="columnSelection" class="form-control" >
                               <option value="1">Single column</option>
                               <option selected value="2">Two column</option>
                               <option value="3">Three column</option>
                             </select>
-                          </div>
+                          </div> -->
                         <h6 class="pull-left">-click refresh button to see live result and choose appropriate style from above dropdown</h6>
                         
                     </div>
@@ -101,10 +116,10 @@
                     <div class="panel-body">
                         <div id="submitConditionDiv">
                             <div>
-                                <label>When I click submit button</label>
-                                <select style="width:20%" class="selectcustom" id="submitButtonList">
+                                <label>When I click submit button,</label>
+                                <!-- <select style="width:20%" class="selectcustom" id="submitButtonList">
 
-                                </select>
+                                </select> -->
                                 <label>perform below checks and alert me if any condition is wrong</label>
                             </div>
                             <div id="submitValidationconditions">
@@ -120,7 +135,7 @@
                     </div>
                     <div class="panel-body">
                         <div>
-                            <label>Derive  </label>
+                            <label>Derive value of</label>
                         </div>
                         <div id="computeLogicDiv">
                            
@@ -128,6 +143,17 @@
                         <a id="addComputeLogic">add new compute logic</a>
                     </div>
                 </div>
+                <!-- <div class="panel panel-default">
+                    <div class="panel-heading clearfix">
+                        <h2 class="panel-title pull-left">Your own Javascript Code</h2>
+                        <h6>-You can use form's ID/Name value to identify DOM elements</h6>
+                    </div>
+                    <div class="panel-body">
+                        <textarea rows="10"  name="textJS" id="textJS" style="width:100%!important">
+
+                        </textarea>
+                    </div>
+                </div> -->
                 
             </div>
             <div class="panel-footer">
