@@ -2,6 +2,7 @@ jQuery(function($) {
   var i=0;
   var submitrulenumber=0;
   var computelogicnumber=0;
+  var scopecomputelogicnumber=0;
   var rulenumber=[];
   var rulenumbercnt=0;
   rulenumber[0]=[];
@@ -910,8 +911,51 @@ jQuery(function($) {
       }
      
     }
+    var onblurComputeogic=""
+    if(scopecomputelogicnumber>=0)
+    {
+      var ct=0;
+      for(ct=0;ct<=scopecomputelogicnumber;ct++)
+      {
+        var blurlist = document.getElementById("blurlist"+ct);
+        if(blurlist)
+        {
+          var blurlistvalue=blurlist.options[blurlist.selectedIndex].value;
+          var valueBoxVal=document.getElementById("valueBox"+ct).value;
+          var targetList = document.getElementById("targetList"+ct);
+          var targetId = targetList.options[targetList.selectedIndex].value;
+          var targetValue = document.getElementById("targetValue"+ct).value;
+          targetValue = targetValue.replace(/'/g,'"');
+          onblurComputeogic+=`
+          $('#`+blurlistvalue+`').on('change', function() {
+            if(this.value=='`+valueBoxVal+`'){
+              //var targetInput = document.getElementById(`+targetId+`);
+              if( $('#`+targetId+`').is('SELECT') ){
+                var select = $('#`+targetId+`');
+                var jobj=JSON.parse('`+targetValue+`');
+                select.empty();
+                for (var key in jobj) {
+                  select.append($("<option>").attr(\'value\',key).text(jobj[key]));
+                }
+              }else{
+                $('#`+targetId+`').val('`+targetValue+`');
+              }
+            }else{
+              if($('#`+targetId+`').is('SELECT')){
+                $('#`+targetId+`').empty();
+              }else{
+                $('#`+targetId+`').val('');
+              }
+            }
+          });
+          `;
+
+        }
+      }
+    }
     str+=submitstring;
     str+=computelogicstring;
+    str+=onblurComputeogic;
     str+=onclickButtonTriggerString;
     str+=validationScriptString;
     
@@ -1176,6 +1220,60 @@ jQuery(function($) {
   //   });
   //   renderJS();
   // })
+document.getElementById("addOnBlurLogic").onclick=onBlurRuleCreator;
+function onBlurRuleCreator()
+{
+  var parentDiv=document.getElementById("onBlurLogics");
+  var scopeDiv = document.createElement("div");
+  scopeDiv.id="blurscopediv"+scopecomputelogicnumber;
+  scopeDiv.style.margin="10px";
+
+  var blurList = document.createElement("select");
+  blurList.id = "blurlist"+scopecomputelogicnumber;
+  blurList.style.width="20%";
+  blurList.className="selectcustom";
+  if(formBuilder){
+    var frmData=JSON.parse(formBuilder.actions.getData('json', true));
+    dropdownOptionsGenerator(frmData,blurList,"new");
+  }
+
+  var isLabel = document.createElement("label");
+  isLabel.innerHTML=" is ";
+
+  var valueBox=document.createElement("input");
+  valueBox.id="valueBox"+scopecomputelogicnumber;
+
+  var thenLabel = document.createElement("label");
+  thenLabel.innerHTML=" then value of ";
+
+  var targetList = document.createElement("select");
+  targetList.id = "targetList"+scopecomputelogicnumber;
+  targetList.style.width="20%";
+  targetList.className="selectcustom";
+  if(formBuilder){
+    var frmData=JSON.parse(formBuilder.actions.getData('json', true));
+    dropdownOptionsGenerator(frmData,targetList,"new");
+  }
+
+  var equalsLabel=document.createElement("label");
+  equalsLabel.innerHTML=" = ";
+
+  var targetValue=document.createElement("input");
+  targetValue.id="targetValue"+scopecomputelogicnumber;
+  
+  
+  scopeDiv.appendChild(blurList);
+  scopeDiv.appendChild(isLabel);
+  scopeDiv.appendChild(valueBox);
+  scopeDiv.appendChild(thenLabel);
+  scopeDiv.appendChild(targetList);
+  scopeDiv.appendChild(equalsLabel);
+  scopeDiv.appendChild(targetValue);
+  parentDiv.appendChild(scopeDiv);
+  $('.selectcustom').select2();
+  scopecomputelogicnumber++;
+
+}
 document.getElementById("addComputeLogic").onclick=computeRuleCreator;
 function computeRuleCreator()
 {
