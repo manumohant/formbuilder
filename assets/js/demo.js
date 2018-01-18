@@ -914,11 +914,7 @@ jQuery(function($) {
     str+=computelogicstring;
     str+=onclickButtonTriggerString;
     str+=validationScriptString;
-    //var rowJS=document.getElementById("textJS").value;
-    //js.innerHTML="(function(){"+str+"})()";
-    js.text=`
-    `+str+`
-    `;
+    
     try{
       var item = document.getElementById("jsScript");
       item.parentNode.removeChild(item);
@@ -954,9 +950,74 @@ jQuery(function($) {
     var btn = `<button type="button" class="btn btn-primary" name="tempsubmitbutton" style="primary" id="tempsubmitbutton">Submit</button>`;
     tempDiv.innerHTML=btn;
     document.getElementById("render-wrap").appendChild(tempDiv);
-    //
+    
+    var rowEquation=document.getElementById("textJS").value;
+    var temp_str_fun="";
+    if(rowEquation)
+    {
+      var equationString="";
+      rowEquation=rowEquation.replace(/ /g,"");
+      rowEquation=rowEquation.replace(/\r?\n|\r/g,"");
+      var equation_array=rowEquation.split(";");
+      for(var len=0;len<equation_array.length;len++)
+      {
+        var item=equation_array[len];
+        if(item=="") continue;
+        var side_array=item.split("=");
+        if(side_array.length!=2){
+          alert("Please write a qualified equation. Error on line number "+len);
+          break;
+        }
+        var lhsElement = document.getElementById(side_array[0]);
+        var elements=side_array[1].split(/[*+-/)(]+/);
+        elements.push(side_array[0]);
+        var validationResult = validateElement(elements)
+        if(!validationResult) {
+          equationString="";
+          break;
+        }
+        equationString+=validationResult;
+        equationString+=`$('#`+side_array[0]+`').val(isNaN(`+side_array[1]+`)?0:`+side_array[1]+`);
+        `;
+        
+        
+      }
+      if(equationString!=""){
+        temp_str_fun=`
+        $('form').on('keyup change', 'input, select, textarea', function(){
+            `+equationString+`
+        });`;
+      }
+    }
+    //js.innerHTML="(function(){"+str+"})()";
+    js.text=`
+    `+str+`
+    `+temp_str_fun+`
+    `;
+
     document.getElementById("render-wrap").appendChild(js);
     
+  }
+  
+  function validateElement(elements)
+  {
+    var string="";
+    elements = elements.filter(function(el, index, arr) {
+      return index === arr.indexOf(el);
+    });
+    for(var el=0;el<elements.length;el++){
+      if(!isNaN(elements[el]))continue;
+      var domel = document.getElementById(elements[el]);
+      if(!domel){
+        alert("Element with id "+elements[el]+ " not found. Please review your equation");
+        string="";
+        return false;
+      }
+      string+=`var `+elements[el]+`=parseFloat($('#`+elements[el]+`').val());
+      `;
+
+    }
+    return string;
   }
   function checkAgainst(action,con,k)
   {
