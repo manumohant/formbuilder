@@ -725,7 +725,7 @@ jQuery(function($) {
     var file = new Blob([text], {type: "text/html"});
     a.href = URL.createObjectURL(file);
     a.style.display="block";
-    a.download = "formHTML.html";
+    a.download = head+".html";
   }
   document.getElementById("downloadBtn").addEventListener("click",function(){
     //updateFieldDropdowns();
@@ -745,7 +745,8 @@ jQuery(function($) {
     text= firstHalfTemp+text+secondHalf;
     var file = new Blob([text], {type: "text/html"});
     var link = document.createElement("a");
-    link.download = "formHTML.html";
+    if(head)link.download = head+".html";
+    else link.download = "mGT_Form.html";
     link.href = URL.createObjectURL(file);
     document.body.appendChild(link);
     link.click();
@@ -911,7 +912,7 @@ jQuery(function($) {
       }
      
     }
-    var onblurComputeogic=""
+    var onblurComputeogic=``;
     if(scopecomputelogicnumber>=0)
     {
       var ct=0;
@@ -920,35 +921,35 @@ jQuery(function($) {
         var blurlist = document.getElementById("blurlist"+ct);
         if(blurlist)
         {
-          var blurlistvalue=blurlist.options[blurlist.selectedIndex].value;
-          var valueBoxVal=document.getElementById("valueBox"+ct).value;
-          var targetList = document.getElementById("targetList"+ct);
-          var targetId = targetList.options[targetList.selectedIndex].value;
-          var targetValue = document.getElementById("targetValue"+ct).value;
-          targetValue = targetValue.replace(/'/g,'"');
-          onblurComputeogic+=`
-          $('#`+blurlistvalue+`').on('change', function() {
-            if(this.value=='`+valueBoxVal+`'){
-              //var targetInput = document.getElementById(`+targetId+`);
-              if( $('#`+targetId+`').is('SELECT') ){
-                var select = $('#`+targetId+`');
-                var jobj=JSON.parse('`+targetValue+`');
-                select.empty();
-                for (var key in jobj) {
-                  select.append($("<option>").attr(\'value\',key).text(jobj[key]));
+          if(blurlist.options[blurlist.selectedIndex])
+          {
+            var blurlistvalue=blurlist.options[blurlist.selectedIndex].value;
+            var valueBoxVal=document.getElementById("valueBox"+ct).value;
+            var targetList = document.getElementById("targetList"+ct);
+            var targetId = targetList.options[targetList.selectedIndex].value;
+            var targetValue = document.getElementById("targetValue"+ct).value;
+            targetValue = targetValue.replace(/'/g,'"');
+            
+            onblurComputeogic+=`
+            $('#`+blurlistvalue+`').on('change', function() {
+              if(this.value=='`+valueBoxVal+`'){
+                //var targetInput = document.getElementById(`+targetId+`);
+                if( $('#`+targetId+`').is('SELECT') ){
+                  var select = $('#`+targetId+`');
+                  var jobj=JSON.parse('`+targetValue+`');
+                  select.empty();
+                  for (var key in jobj) {
+                    select.append($("<option>").attr(\'value\',key).text(jobj[key]));
+                  }
+                }else{
+                  $('#`+targetId+`').val('`+targetValue+`');
                 }
               }else{
-                $('#`+targetId+`').val('`+targetValue+`');
+                
               }
-            }else{
-              if($('#`+targetId+`').is('SELECT')){
-                $('#`+targetId+`').empty();
-              }else{
-                $('#`+targetId+`').val('');
-              }
-            }
-          });
-          `;
+            });
+            `;
+          }
 
         }
       }

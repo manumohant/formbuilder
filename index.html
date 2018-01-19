@@ -36,21 +36,7 @@
             <option value="zh-TW">台語</option>
           </select> -->
         <div style="width:100%; padding-bottom:1%;">
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="InputFieldA" class="col-md-3">Form Heading</label>
-                    <div class="col-md-12">
-                        <input type="text" class="form-control col-md-12" id="head" name="head" placeholder="form heading">
-                    </div>
-                </div>
-
-                <div class="form-group col-md-6">
-                    <label for="InputFieldB" class="col-md-3">Logo URL</label>
-                    <div class="col-md-12">
-                    <input type="text" class="form-control col-md-12" id="logourl" placeholder="Logo URL">
-                    </div>
-                </div>
-            </div>
+            
             
         </div>
         
@@ -59,6 +45,21 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Construct your form<h6>-click 'Execute/Refresh' button to see live result on the right side</h6></div>
                     <div class="panel-body">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="InputFieldA" class="col-md-12">Form Heading</label>
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control col-md-12" id="head" name="head" placeholder="form heading">
+                                    </div>
+                                </div>
+                
+                                <div class="form-group col-md-6">
+                                    <label for="InputFieldB" class="col-md-12">Logo URL</label>
+                                    <div class="col-md-12">
+                                    <input type="text" class="form-control col-md-12" id="logourl" placeholder="Logo URL">
+                                    </div>
+                                </div>
+                            </div>
                         <div id="stage1" class="build-wrap"></div>
                     </div>
                     
@@ -82,6 +83,7 @@
                         
                     </div>
                     <div class="panel-body">
+                        
                         <form class="render-wrap" id="render-wrap"></form>
                     </div>
                   </div>
@@ -150,9 +152,15 @@
                             <a id="addOnBlurLogic">add new logic</a>
                             <span class="tooltip-element" tooltip="To assign a list of values, please use JSON notation. For eg: {'value1':'text1','value2':'text2'}" style="display: inline-block;">?</span>
                         </div>
+                        <hr>
+                        <div>
+                            <label>Equations</label>
+                            <span class="tooltip-element" tooltip="Write Equation for complex compute logic. You can use input field's ID directly in the equation as operand. Each equation is separated by semi colon(;), and should have an operand on LHS and one or more operand on the RHS" style="display: inline-block;">?</span>
+                            <textarea placeholder="for eg: score-field-id=total-marks-field-id/100;" rows="10"  name="textJS" id="textJS" style="width:100%!important"></textarea>
+                        </div>
                     </div>
                 </div>
-                <div class="panel panel-default">
+                <!-- <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         <h2 class="panel-title pull-left">Write Equation for complex compute logic</h2>
                         <h6>-You can use input field's ID directly in the equation as operand. Each equation is separated by semi colon(;), and should have an operand on LHS and one or more operand on the RHS</h6>
@@ -160,7 +168,7 @@
                     <div class="panel-body">
                         <textarea placeholder="for eg: score-field-id=total-marks-field-id/100;" rows="10"  name="textJS" id="textJS" style="width:100%!important"></textarea>
                     </div>
-                </div>
+                </div> -->
                 
             </div>
             <div class="panel-footer">
