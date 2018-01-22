@@ -2,6 +2,11 @@
 ## Developed by Fluent Technologies 
 >Manu Mohan T
 
+### File description
+- /assets/js/demo.js File contains all the form builder logics
+- /index.html File contains the UI
+- /form_builder_doc.doc contains high level support documentation
+
 
 
 ### Initial Version Commits
@@ -17,7 +22,12 @@
 - Added compute logic section
 - Added textbox to place logo URL
 - Added note to the form user to avoid using special character in form input field
-
+### Forth Commit
+- Error fixes
+- Added equation option to compute logic section
+- Added Section to dynamically change value of dropdown/text field based on compute logic
+- Sytle changes
+### Added document Read it [here](form_builder_doc.doc)
 
 This software was built using [formBuilder](https://github.com/kevinchappell/formBuilder).
 
