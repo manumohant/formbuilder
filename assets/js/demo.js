@@ -62,11 +62,7 @@ jQuery(function($) {
   
   <div style="margin:auto; text-align:center;">
     <div id="mainFormHolder" class="main-div" style="border:1px solid #ccc; border-radius: 13px; padding:10px;">
-    <div style="width:100%;">
-  <div style="text-align:center;">
-  <h4>{{FormHeading}}</h4>
-    </div>
-    </div>
+    
     `;
     var secondHalf=
     `</div>
@@ -983,11 +979,16 @@ jQuery(function($) {
     // noteLabel.className="col-sm-12";
     // document.getElementById("rendered-form").appendChild(noteLabel);
     var logoURL = document.getElementById("logourl").value;
-    if(logoURL&& logoURL!='')
+    var headTxt = document.getElementById("head").value
+    if((logoURL&& logoURL!='')|| (headTxt&&headTxt!=null))
     {
-      var img = document.createElement("img");
-      img.src=logoURL;
-      document.getElementById("rendered-form").insertBefore(img, document.getElementById("rendered-form").firstChild);
+      var cls="col-md-12";
+      if(logoURL!='' && headTxt!='') cls="col-md-6";
+      $('#render-wrap').prepend('<div class="row" id="headrowdiv"></div>')
+      if(logoURL!='')$('#headrowdiv').append('<div class="'+cls+'" style="text-align:center;"><img src="'+logoURL+'" height="48"/></div>'); 
+      if(headTxt!='')$('#headrowdiv').prepend('<div class="'+cls+'" style="text-align:center;">'+headTxt+'</div>'); 
+
+      
     }
     var tempDiv = document.createElement("div");
     tempDiv.id="toberemoved";

@@ -27,6 +27,8 @@
 - Added equation option to compute logic section
 - Added Section to dynamically change value of dropdown/text field based on compute logic
 - Sytle changes
+### Fifth Commit
+- Added changes to show Heading and Logo image on preview page
 ### Added document Read it [here](form_builder_doc.doc)
 
 This software was built using [formBuilder](https://github.com/kevinchappell/formBuilder).
