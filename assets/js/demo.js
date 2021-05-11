@@ -134,38 +134,17 @@ jQuery(function($) {
   addRule();
 
   var fields = [
-    {
-      type: 'autocomplete',
-      label: 'Custom Autocomplete',
-      required: true,
-      values: [
-        {label: 'SQL'},
-        {label: 'C#'},
-        {label: 'JavaScript'},
-        {label: 'Java'},
-        {label: 'Python'},
-        {label: 'C++'},
-        {label: 'PHP'},
-        {label: 'Swift'},
-        {label: 'Ruby'}
-      ]
-    },
-    {
-      label: 'Star Rating',
-      attrs: {
-        type: 'starRating'
-      },
-      icon: '🌟'
-    }
+    
+
   ];
 
   var replaceFields = [
-    {
-      type: 'textarea',
-      subtype: 'tinymce',
-      label: 'tinyMCE',
-      required: true,
-    }
+    // {
+    //   type: 'text',
+    //   subtype: 'time',
+    //   label: 'Time',
+    //   required: true,
+    // }
   ];
 
   var actionButtons = [{
@@ -192,48 +171,26 @@ jQuery(function($) {
   };
 
   var inputSets = [{
-        label: 'User Details',
-        icon: '👨',
-        name: 'user-details', // optional
-        showHeader: true, // optional
+        label: 'Time',
+        icon: '&#x1F550;',
+        name: 'time', // optional
+        showHeader: false, // optional
         fields: [{
-          type: 'text',
-          label: 'First Name',
-          className: 'form-control'
-        }, {
-          type: 'select',
-          label: 'Profession',
-          className: 'form-control',
-          values: [{
-            label: 'Street Sweeper',
-            value: 'option-2',
-            selected: false
-          }, {
-            label: 'Brain Surgeon',
-            value: 'option-3',
-            selected: false
-          }]
-        }, {
-          type: 'textarea',
-          label: 'Short Bio:',
+          type: 'text',subtype:"time",
+          label: 'Time',
           className: 'form-control'
         }]
-      }, {
-        label: 'User Agreement',
+      },
+      {
+        label: 'Currency',
+        icon: '&#x1F4B5;',
+        name: 'currency', // optional
+        className:'row',
+        showHeader: false, // optional
         fields: [{
-          type: 'header',
-          subtype: 'h3',
-          label: 'Terms & Conditions',
-          className: 'header'
-        }, {
-          type: 'paragraph',
-          label: 'Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.',
-        }, {
-          type: 'paragraph',
-          label: 'Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.',
-        }, {
-          type: 'checkbox',
-          label: 'Do you agree to the terms and conditions?',
+          type: 'number',subtype:"number",
+          label: 'Amount',
+          className: 'form-control col-sm-10'
         }]
       }];
 
@@ -260,7 +217,7 @@ jQuery(function($) {
 
   var fbOptions = {
     subtypes: {
-      text: ['datetime-local']
+      text: ['time']
     },
     onSave: function(e, formData) {
       //toggleEdit();
@@ -278,15 +235,15 @@ jQuery(function($) {
       enable: true
     },
     sortableControls: true,
-    // fields: fields,
+    fields: fields,
     templates: templates,
-    // inputSets: inputSets,
+    inputSets: inputSets,
     typeUserDisabledAttrs: typeUserDisabledAttrs,
     typeUserAttrs: typeUserAttrs,
     disableInjectedStyle: false,
     // actionButtons: actionButtons,
     disableFields: ['autocomplete'],
-    // replaceFields: replaceFields,
+    replaceFields: replaceFields,
     disabledFieldButtons: {
       text: ['copy']
     }
@@ -324,6 +281,7 @@ jQuery(function($) {
   var formBuilder = $('.build-wrap').formBuilder(fbOptions);
   var fbPromise = formBuilder.promise;
   document.addEventListener('fieldAdded', function(){
+    //alert(formBuilder.formData) ;
     setTimeout(function(){
       updateFieldDropdowns();
       $('.render-wrap').formRender({
