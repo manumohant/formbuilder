@@ -31,5 +31,4 @@
 - Added changes to show Heading and Logo image on preview page
 ### Added document Read it [here](form_builder_doc.doc)
 
-This software was built using [formBuilder](https://github.com/kevinchappell/formBuilder).
 
